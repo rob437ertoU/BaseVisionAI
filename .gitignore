@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data
+data/raw/*
+data/processed/*
+data/dataset/*
+
+# Models
+models/*.pt
+models/*.onnx
+models/*.engine
+
+# Results
+results/*
+reports/*
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# YOLO
+*.pt
+*.onnx
+*.engine
+
+# YOLO generated files
+runs/
+bus.jpg
