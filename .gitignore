@@ -44,3 +44,5 @@ Thumbs.db
 # YOLO generated files
 runs/
 bus.jpg
+# Roboflow datasets
+data/baseball_v1/
