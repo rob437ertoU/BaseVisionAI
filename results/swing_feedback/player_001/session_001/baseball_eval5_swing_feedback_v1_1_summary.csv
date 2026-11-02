@@ -1,0 +1,2 @@
+feedback_version,video_id,player_id,session_id,target_validity,session_profiles,valid_session_profiles,baseline_profiles,baseline_mode,metrics_available,metrics_compared,consistent_metrics,slightly_different_metrics,outside_typical_range_metrics,high_metrics,low_metrics,mean_pose_quality,measurement_confidence,missing_metrics
+Swing Feedback V1.1,baseball_eval5,player_001,session_001,LOW_CONFIDENCE_SWING,6,5,5,LEAVE_ONE_OUT,14,14,1,4,9,5,4,0.9230769230769232,HIGH,

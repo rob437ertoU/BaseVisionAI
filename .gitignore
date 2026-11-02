@@ -46,3 +46,40 @@ runs/
 bus.jpg
 # Roboflow datasets
 data/baseball_v1/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# Configuraciones privadas
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Archivos temporales
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# Videos y archivos grandes
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Pesos de modelos
+*.pt
+*.pth
+*.onnx
+
+# Archivos generados de análisis
+results/**/*.png
+results/**/*.jpg
+results/**/*.jpeg

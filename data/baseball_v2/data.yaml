@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['baseball']
+
+roboflow:
+  workspace: edcar1408-outlook-com
+  project: basevisionai-baseball-v2
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/edcar1408-outlook-com/basevisionai-baseball-v2/dataset/1

@@ -19,13 +19,13 @@ INPUT_CSV = (
 OUTPUT_PHASES_CSV = (
     PROJECT_ROOT
     / "results"
-    / "swing_phases_v1.csv"
+    / "swing_phases_v1_1.csv"
 )
 
 OUTPUT_SUMMARY_CSV = (
     PROJECT_ROOT
     / "results"
-    / "swing_phases_summary_v1.csv"
+    / "swing_phases_summary_v1_1.csv"
 )
 
 
@@ -39,15 +39,17 @@ MIN_POSE_QUALITY = 0.65
 
 SMOOTHING_WINDOW = 5
 
-# Approximate activation thresholds after normalization
-LOAD_THRESHOLD = 0.30
-SWING_THRESHOLD = 0.25
+# Number of frames before leg peak allowed for LOAD search
+MAX_LOAD_LOOKBACK = 18
 
-# How many consecutive frames we want before accepting
-# the beginning of a phase.
-MIN_CONSECUTIVE_FRAMES = 2
+# Number of frames before peak swing allowed for SWING search
+MAX_SWING_LOOKBACK = 30
 
-# Peak swing window around detected peak
+# Activation thresholds
+LOAD_ACTIVITY_THRESHOLD = 0.45
+SWING_ACTIVITY_THRESHOLD = 0.30
+
+# Peak swing visualization window
 PEAK_WINDOW_BEFORE = 2
 PEAK_WINDOW_AFTER = 2
 
@@ -57,9 +59,6 @@ PEAK_WINDOW_AFTER = 2
 # ============================================================
 
 def rolling_median(series, window=5):
-    """
-    Smooth noisy signals without strongly amplifying spikes.
-    """
 
     return (
         series
@@ -73,23 +72,20 @@ def rolling_median(series, window=5):
 
 
 def robust_normalize(series):
-    """
-    Normalize a signal approximately to 0-1 using its
-    95th percentile rather than absolute maximum.
-
-    This reduces sensitivity to one extreme frame.
-    """
 
     values = pd.to_numeric(
         series,
         errors="coerce"
     )
 
-    values = values.clip(lower=0)
+    values = values.clip(
+        lower=0
+    )
 
     valid = values.dropna()
 
     if valid.empty:
+
         return pd.Series(
             0.0,
             index=series.index
@@ -104,92 +100,45 @@ def robust_normalize(series):
         not np.isfinite(scale)
         or scale <= 1e-6
     ):
+
         return pd.Series(
             0.0,
             index=series.index
         )
 
-    normalized = values / scale
+    normalized = (
+        values
+        /
+        scale
+    )
 
     return normalized.clip(
-        lower=0.0,
-        upper=1.0
+        0.0,
+        1.0
     )
 
 
-def find_first_sustained(
-    df,
-    column,
-    threshold,
-    start_frame=None,
-    end_frame=None,
-    consecutive=2
-):
-    """
-    Find the first frame where the selected signal remains
-    above threshold for N consecutive frames.
-    """
-
-    work = df.copy()
-
-    if start_frame is not None:
-        work = work[
-            work["frame"] >= start_frame
-        ]
-
-    if end_frame is not None:
-        work = work[
-            work["frame"] <= end_frame
-        ]
-
-    if work.empty:
-        return None
-
-    frames = work["frame"].to_numpy()
-    values = work[column].to_numpy()
-
-    for i in range(
-        0,
-        len(work) - consecutive + 1
-    ):
-
-        window = values[
-            i:i + consecutive
-        ]
-
-        if np.all(
-            np.isfinite(window)
-            &
-            (window >= threshold)
-        ):
-            return int(
-                frames[i]
-            )
-
-    return None
-
-
-def safe_frame_of_max(
+def frame_of_max(
     df,
     column,
     start_frame=None,
     end_frame=None
 ):
-    """
-    Return the actual video frame associated with the
-    maximum value of a signal.
-    """
 
     work = df.copy()
 
     if start_frame is not None:
+
         work = work[
-            work["frame"] >= start_frame
+            work["frame"]
+            >= start_frame
         ]
 
     if end_frame is not None:
+
         work = work[
-            work["frame"] <= end_frame
+            work["frame"]
+            <= end_frame
         ]
 
     work = work.dropna(
@@ -199,7 +148,9 @@ def safe_frame_of_max(
     if work.empty:
         return None
 
-    idx = work[column].idxmax()
+    idx = work[
+        column
+    ].idxmax()
 
     return int(
         work.loc[
@@ -209,49 +160,60 @@ def safe_frame_of_max(
     )
 
 
-def backtrack_phase_start(
+def find_onset_before_peak(
     df,
-    peak_frame,
     column,
-    threshold
+    peak_frame,
+    threshold,
+    max_lookback
 ):
     """
-    Starting at a peak, move backward until the activity
-    falls below a lower threshold.
+    Search backward from a known peak.
 
-    This gives us an approximate beginning of LOAD rather
-    than labeling only the peak frame itself.
+    We find the earliest meaningful activation close to that
+    peak instead of allowing weak activity much earlier in
+    the clip to start the phase.
     """
 
-    before = df[
-        df["frame"] <= peak_frame
-    ].copy()
-
-    if before.empty:
-        return peak_frame
-
-    before = before.sort_values(
-        "frame",
-        ascending=False
+    search_start = max(
+        int(df["frame"].min()),
+        peak_frame - max_lookback
     )
 
-    candidate = peak_frame
+    work = df[
+        (
+            df["frame"]
+            >= search_start
+        )
+        &
+        (
+            df["frame"]
+            <= peak_frame
+        )
+    ].copy()
 
-    for _, row in before.iterrows():
+    if work.empty:
+        return peak_frame
 
-        value = row[column]
+    active = (
+        work[column]
+        >= threshold
+    )
 
-        if not np.isfinite(value):
-            continue
+    active_frames = work.loc[
+        active,
+        "frame"
+    ]
 
-        if value >= threshold:
-            candidate = int(
-                row["frame"]
-            )
-        else:
-            break
+    if active_frames.empty:
 
-    return candidate
+        return search_start
+
+    first_active = int(
+        active_frames.iloc[0]
+    )
+
+    return first_active
 
 
 # ============================================================
@@ -261,7 +223,7 @@ def backtrack_phase_start(
 def main():
 
     print("=" * 80)
-    print("BaseVisionAI - Swing Phase Detection V1")
+    print("BaseVisionAI - Swing Phase Detection V1.1")
     print("=" * 80)
 
     print(
@@ -269,15 +231,14 @@ def main():
     )
 
     # ========================================================
-    # LOAD
+    # LOAD CSV
     # ========================================================
 
     if not INPUT_CSV.exists():
 
         raise FileNotFoundError(
-            f"Input file not found:\n"
-            f"{INPUT_CSV}\n\n"
-            "Run analyze_swing.py first."
+            f"File not found:\n"
+            f"{INPUT_CSV}"
         )
 
     df = pd.read_csv(
@@ -295,10 +256,10 @@ def main():
     )
 
     # ========================================================
-    # VERIFY REQUIRED COLUMNS
+    # VALIDATE COLUMNS
     # ========================================================
 
-    required_columns = [
+    required = [
         "frame",
         "swing_pose_quality",
         "left_wrist_relative_speed_px_frame",
@@ -311,19 +272,20 @@ def main():
 
     missing = [
         col
-        for col in required_columns
+        for col in required
         if col not in df.columns
     ]
 
     if missing:
 
         raise ValueError(
-            "Missing required columns:\n"
-            + "\n".join(missing)
+            "Missing columns:\n"
+            +
+            "\n".join(missing)
         )
 
     # ========================================================
-    # POSE VALIDITY
+    # VALID POSE
     # ========================================================
 
     df["pose_valid"] = (
@@ -332,97 +294,67 @@ def main():
     )
 
     # ========================================================
-    # SMOOTH RAW MOTION SIGNALS
+    # SMOOTH MOTION SIGNALS
     # ========================================================
 
-    df[
-        "left_wrist_speed_smooth"
-    ] = rolling_median(
-        df[
-            "left_wrist_relative_speed_px_frame"
-        ],
-        SMOOTHING_WINDOW
+    df["left_wrist_smooth"] = (
+        rolling_median(
+            df[
+                "left_wrist_relative_speed_px_frame"
+            ],
+            SMOOTHING_WINDOW
+        )
     )
 
-    df[
-        "right_wrist_speed_smooth"
-    ] = rolling_median(
-        df[
-            "right_wrist_relative_speed_px_frame"
-        ],
-        SMOOTHING_WINDOW
+    df["right_wrist_smooth"] = (
+        rolling_median(
+            df[
+                "right_wrist_relative_speed_px_frame"
+            ],
+            SMOOTHING_WINDOW
+        )
     )
 
-    df[
-        "hip_speed_smooth"
-    ] = rolling_median(
-        df[
-            "hip_center_speed_px_frame"
-        ],
-        SMOOTHING_WINDOW
+    df["hip_smooth"] = (
+        rolling_median(
+            df[
+                "hip_center_speed_px_frame"
+            ],
+            SMOOTHING_WINDOW
+        )
     )
 
-    df[
-        "shoulder_speed_smooth"
-    ] = rolling_median(
-        df[
-            "shoulder_center_speed_px_frame"
-        ],
-        SMOOTHING_WINDOW
-    )
-
-    # ========================================================
-    # LEG ACTIVITY
-    # ========================================================
-
-    ankle_activity = (
-        df[
-            "ankle_change_from_baseline_px"
-        ]
-        .abs()
-    )
-
-    knee_activity = (
-        df[
-            "knee_change_from_baseline_px"
-        ]
-        .abs()
+    df["shoulder_smooth"] = (
+        rolling_median(
+            df[
+                "shoulder_center_speed_px_frame"
+            ],
+            SMOOTHING_WINDOW
+        )
     )
 
     ankle_activity = rolling_median(
-        ankle_activity,
+        df[
+            "ankle_change_from_baseline_px"
+        ].abs(),
         SMOOTHING_WINDOW
     )
 
     knee_activity = rolling_median(
-        knee_activity,
+        df[
+            "knee_change_from_baseline_px"
+        ].abs(),
         SMOOTHING_WINDOW
     )
 
-    # Normalize each leg signal independently first
-    ankle_norm = robust_normalize(
-        ankle_activity
-    )
-
-    knee_norm = robust_normalize(
-        knee_activity
-    )
-
-    # Ankle slightly more important for leg-kick detection
-    df["leg_activity_score"] = (
-        0.60 * ankle_norm
-        +
-        0.40 * knee_norm
-    )
-
     # ========================================================
-    # NORMALIZE MOTION SIGNALS
+    # NORMALIZED SCORES
     # ========================================================
 
     df["left_wrist_score"] = (
         robust_normalize(
             df[
-                "left_wrist_speed_smooth"
+                "left_wrist_smooth"
             ]
         )
     )
@@ -430,40 +362,55 @@ def main():
     df["right_wrist_score"] = (
         robust_normalize(
             df[
-                "right_wrist_speed_smooth"
+                "right_wrist_smooth"
             ]
         )
     )
 
-    df["hip_motion_score"] = (
+    df["hip_score"] = (
         robust_normalize(
             df[
-                "hip_speed_smooth"
+                "hip_smooth"
             ]
         )
     )
 
-    df["shoulder_motion_score"] = (
+    df["shoulder_score"] = (
         robust_normalize(
             df[
-                "shoulder_speed_smooth"
+                "shoulder_smooth"
             ]
         )
+    )
+
+    ankle_score = robust_normalize(
+        ankle_activity
+    )
+
+    knee_score = robust_normalize(
+        knee_activity
     )
 
     # ========================================================
-    # SWING ACTIVITY SCORE
+    # LEG ACTIVITY
     # ========================================================
 
-    # Left wrist receives the highest weight because it had
-    # much better raw keypoint reliability in our current clip.
-    #
-    # Right wrist remains useful, but secondary.
-    #
-    # Hip and shoulder motion provide supporting context.
+    df["leg_activity_score"] = (
+        0.60
+        *
+        ankle_score
+        +
+        0.40
+        *
+        knee_score
+    )
+
+    # ========================================================
+    # SWING ACTIVITY
+    # ========================================================
 
     df["swing_activity_score"] = (
-        0.50
+        0.55
         *
         df["left_wrist_score"]
         +
@@ -473,18 +420,17 @@ def main():
         +
         0.20
         *
-        df["hip_motion_score"]
+        df["hip_score"]
         +
-        0.15
+        0.10
         *
-        df["shoulder_motion_score"]
+        df["shoulder_score"]
     )
 
     # ========================================================
-    # PEAK SWING SCORE
+    # PEAK SCORE
     # ========================================================
 
-    # Peak detection emphasizes hand speed even more.
     df["peak_swing_score"] = (
         0.60
         *
@@ -496,27 +442,28 @@ def main():
         +
         0.15
         *
-        df["hip_motion_score"]
+        df["hip_score"]
         +
         0.10
         *
-        df["shoulder_motion_score"]
+        df["shoulder_score"]
     )
 
-    # Invalid pose frames should not create phase events.
+    # Invalid pose should not trigger events
     df.loc[
         ~df["pose_valid"],
         [
+            "leg_activity_score",
             "swing_activity_score",
             "peak_swing_score"
         ]
     ] = np.nan
 
     # ========================================================
-    # DETECT PEAK SWING
+    # PEAK SWING
     # ========================================================
 
-    peak_swing_frame = safe_frame_of_max(
+    peak_swing_frame = frame_of_max(
         df,
         "peak_swing_score"
     )
@@ -524,14 +471,14 @@ def main():
     if peak_swing_frame is None:
 
         raise ValueError(
-            "Could not detect a peak swing frame."
+            "Peak swing could not be detected."
         )
 
     # ========================================================
-    # DETECT LEG-KICK PEAK
+    # LEG PEAK
     # ========================================================
 
-    leg_peak_frame = safe_frame_of_max(
+    leg_peak_frame = frame_of_max(
         df,
         "leg_activity_score",
         end_frame=peak_swing_frame
@@ -539,57 +486,71 @@ def main():
 
     if leg_peak_frame is None:
 
-        leg_peak_frame = max(
-            1,
-            peak_swing_frame - 20
+        raise ValueError(
+            "Leg activity peak could not be detected."
         )
 
     # ========================================================
-    # ESTIMATE LOAD START
+    # LOAD START
     # ========================================================
 
-    load_start = backtrack_phase_start(
+    load_start = find_onset_before_peak(
         df,
-        leg_peak_frame,
         "leg_activity_score",
-        threshold=LOAD_THRESHOLD
-    )
-
-    # Prevent baseline noise from starting the phase too early
-    minimum_reasonable_load_frame = max(
-        int(df["frame"].min()) + 5,
-        1
-    )
-
-    load_start = max(
-        load_start,
-        minimum_reasonable_load_frame
+        peak_frame=leg_peak_frame,
+        threshold=LOAD_ACTIVITY_THRESHOLD,
+        max_lookback=MAX_LOAD_LOOKBACK
     )
 
     # ========================================================
-    # DETECT SWING START
+    # SWING START
     # ========================================================
 
-    swing_start = find_first_sustained(
-        df,
-        "swing_activity_score",
-        threshold=SWING_THRESHOLD,
-        start_frame=load_start,
-        end_frame=peak_swing_frame,
-        consecutive=MIN_CONSECUTIVE_FRAMES
+    swing_search_start = max(
+        leg_peak_frame - 3,
+        peak_swing_frame - MAX_SWING_LOOKBACK
     )
 
-    if swing_start is None:
+    swing_window = df[
+        (
+            df["frame"]
+            >= swing_search_start
+        )
+        &
+        (
+            df["frame"]
+            <= peak_swing_frame
+        )
+    ].copy()
+
+    active_swing = swing_window[
+        swing_window[
+            "swing_activity_score"
+        ]
+        >=
+        SWING_ACTIVITY_THRESHOLD
+    ]
+
+    if active_swing.empty:
 
         swing_start = max(
-            load_start + 1,
-            peak_swing_frame - 10
+            leg_peak_frame,
+            peak_swing_frame - 12
         )
 
-    # Swing must logically occur after load.
-    if swing_start <= load_start:
+    else:
 
-        swing_start = load_start + 1
+        swing_start = int(
+            active_swing[
+                "frame"
+            ].iloc[0]
+        )
+
+    # Swing should not begin before LOAD begins
+    swing_start = max(
+        swing_start,
+        load_start + 1
+    )
 
     # ========================================================
     # PEAK WINDOW
@@ -610,16 +571,14 @@ def main():
     )
 
     # ========================================================
-    # ASSIGN PHASES
+    # PHASE ASSIGNMENT
     # ========================================================
 
     phases = []
 
-    for _, row in df.iterrows():
+    for frame in df["frame"]:
 
-        frame = int(
-            row["frame"]
-        )
+        frame = int(frame)
 
         if frame < load_start:
 
@@ -651,17 +610,7 @@ def main():
     # CONTACT CANDIDATE
     # ========================================================
 
-    # IMPORTANT:
-    #
-    # This is NOT confirmed contact.
-    #
-    # It only identifies the region with the strongest swing
-    # activity. Ball trajectory analysis will later be fused
-    # with this information.
-
-    df[
-        "contact_candidate"
-    ] = (
+    df["contact_candidate"] = (
         (
             df["frame"]
             >= peak_start
@@ -685,10 +634,21 @@ def main():
         df["frame"].max()
     )
 
-    setup_end = load_start - 1
-    load_end = swing_start - 1
-    swing_end = peak_start - 1
-    follow_start = peak_end + 1
+    setup_end = (
+        load_start - 1
+    )
+
+    load_end = (
+        swing_start - 1
+    )
+
+    swing_end = (
+        peak_start - 1
+    )
+
+    follow_start = (
+        peak_end + 1
+    )
 
     summary = {
         "first_frame":
@@ -742,16 +702,16 @@ def main():
         "contact_candidate_end_frame":
             peak_end,
 
-        "peak_swing_time_seconds":
+        "load_peak_time_seconds":
             (
-                peak_swing_frame - 1
+                leg_peak_frame - 1
             )
             /
             FPS,
 
-        "load_peak_time_seconds":
+        "peak_swing_time_seconds":
             (
-                leg_peak_frame - 1
+                peak_swing_frame - 1
             )
             /
             FPS
@@ -779,64 +739,93 @@ def main():
     )
 
     # ========================================================
-    # TERMINAL OUTPUT
+    # TERMINAL
     # ========================================================
 
-    print("\n" + "=" * 80)
-    print("SWING PHASE SUMMARY V1")
-    print("=" * 80)
+    print(
+        "\n"
+        +
+        "=" * 80
+    )
+
+    print(
+        "SWING PHASE SUMMARY V1.1"
+    )
+
+    print(
+        "=" * 80
+    )
 
     print("\nSETUP")
+
     print(
         f"Frames: "
         f"{first_frame} -> {setup_end}"
     )
 
     print("\nLOAD")
+
     print(
         f"Frames: "
         f"{load_start} -> {load_end}"
     )
+
     print(
         f"Leg activity peak: "
         f"frame {leg_peak_frame}"
     )
 
     print("\nSWING")
+
     print(
         f"Frames: "
         f"{swing_start} -> {swing_end}"
     )
 
     print("\nPEAK SWING")
+
     print(
         f"Frames: "
         f"{peak_start} -> {peak_end}"
     )
+
     print(
         f"Peak swing frame: "
         f"{peak_swing_frame}"
     )
 
     print("\nFOLLOW THROUGH")
+
     print(
         f"Frames: "
         f"{follow_start} -> {last_frame}"
     )
 
     print("\nCONTACT CANDIDATE")
+
     print(
         f"Frames: "
         f"{peak_start} -> {peak_end}"
     )
+
     print(
         "Status: CANDIDATE ONLY - "
         "not confirmed ball/bat contact"
     )
 
-    print("\n" + "=" * 80)
-    print("SWING PHASE DETECTION V1 COMPLETED")
-    print("=" * 80)
+    print(
+        "\n"
+        +
+        "=" * 80
+    )
+
+    print(
+        "SWING PHASE DETECTION V1.1 COMPLETED"
+    )
+
+    print(
+        "=" * 80
+    )
 
     print(
         f"\nFrame analysis:\n"

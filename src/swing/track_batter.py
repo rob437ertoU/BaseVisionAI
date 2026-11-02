@@ -1,4 +1,5 @@
 from pathlib import Path
+import argparse
 import pandas as pd
 import cv2
 import math
@@ -9,31 +10,6 @@ import math
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-
-VIDEO_PATH = (
-    PROJECT_ROOT
-    / "data"
-    / "raw"
-    / "baseball_test.mp4"
-)
-
-PLAYER_CSV = (
-    PROJECT_ROOT
-    / "results"
-    / "player_detection_v2.csv"
-)
-
-OUTPUT_VIDEO = (
-    PROJECT_ROOT
-    / "results"
-    / "batter_tracking_v1.mp4"
-)
-
-OUTPUT_CSV = (
-    PROJECT_ROOT
-    / "results"
-    / "batter_tracking_v1.csv"
-)
 
 
 # ============================================================
@@ -58,6 +34,40 @@ MAX_CENTER_JUMP_PX = 180
 
 # Minimum YOLO confidence for batter observation.
 MIN_CONFIDENCE = 0.25
+
+
+# ============================================================
+# ARGUMENTS
+# ============================================================
+
+def parse_args():
+
+    parser = argparse.ArgumentParser(
+        description="BaseVisionAI - Batter Tracking V1"
+    )
+
+    parser.add_argument(
+        "--video",
+        type=str,
+        required=True,
+        help="Input video path"
+    )
+
+    parser.add_argument(
+        "--input-csv",
+        type=str,
+        required=True,
+        help="Player detection CSV path"
+    )
+
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        required=True,
+        help="Directory where results will be saved"
+    )
+
+    return parser.parse_args()
 
 
 # ============================================================
@@ -235,26 +245,80 @@ def get_batter_detection(
 
 def main():
 
+    args = parse_args()
+
+    # ========================================================
+    # RESOLVE INPUT PATHS
+    # ========================================================
+
+    video_path = Path(args.video)
+
+    if not video_path.is_absolute():
+        video_path = PROJECT_ROOT / video_path
+
+    video_path = video_path.resolve()
+
+    player_csv = Path(args.input_csv)
+
+    if not player_csv.is_absolute():
+        player_csv = PROJECT_ROOT / player_csv
+
+    player_csv = player_csv.resolve()
+
+    # ========================================================
+    # RESOLVE OUTPUT PATHS
+    # ========================================================
+
+    output_dir = Path(args.output_dir)
+
+    if not output_dir.is_absolute():
+        output_dir = PROJECT_ROOT / output_dir
+
+    output_dir = output_dir.resolve()
+
+    output_dir.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    output_video = (
+        output_dir
+        / "batter_tracking_v1.mp4"
+    )
+
+    output_csv = (
+        output_dir
+        / "batter_tracking_v1.csv"
+    )
+
+    # ========================================================
+    # HEADER
+    # ========================================================
+
     print("=" * 70)
     print("BaseVisionAI - Batter Tracking V1")
     print("=" * 70)
+
+    print(f"Video: {video_path}")
+    print(f"Player CSV: {player_csv}")
+    print(f"Output directory: {output_dir}")
 
     # ========================================================
     # VALIDATE INPUTS
     # ========================================================
 
-    if not VIDEO_PATH.exists():
+    if not video_path.exists():
 
         raise FileNotFoundError(
             f"Video not found:\n"
-            f"{VIDEO_PATH}"
+            f"{video_path}"
         )
 
-    if not PLAYER_CSV.exists():
+    if not player_csv.exists():
 
         raise FileNotFoundError(
             f"Player CSV not found:\n"
-            f"{PLAYER_CSV}"
+            f"{player_csv}"
         )
 
     # ========================================================
@@ -262,8 +326,34 @@ def main():
     # ========================================================
 
     player_df = pd.read_csv(
-        PLAYER_CSV
+        player_csv
     )
+
+    required_columns = {
+        "frame",
+        "role",
+        "confidence",
+        "x1",
+        "y1",
+        "x2",
+        "y2"
+    }
+
+    missing_columns = (
+        required_columns
+        -
+        set(player_df.columns)
+    )
+
+    if missing_columns:
+
+        raise ValueError(
+            "Player CSV is missing required columns: "
+            +
+            ", ".join(
+                sorted(missing_columns)
+            )
+        )
 
     batter_df = player_df[
         player_df["role"]
@@ -282,7 +372,7 @@ def main():
 
     cap = cv2.VideoCapture(
         str(
-            VIDEO_PATH
+            video_path
         )
     )
 
@@ -290,7 +380,7 @@ def main():
 
         raise RuntimeError(
             f"Could not open video:\n"
-            f"{VIDEO_PATH}"
+            f"{video_path}"
         )
 
     fps = cap.get(
@@ -333,11 +423,6 @@ def main():
     # VIDEO OUTPUT
     # ========================================================
 
-    OUTPUT_VIDEO.parent.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
     fourcc = (
         cv2.VideoWriter_fourcc(
             *"mp4v"
@@ -346,7 +431,7 @@ def main():
 
     writer = cv2.VideoWriter(
         str(
-            OUTPUT_VIDEO
+            output_video
         ),
         fourcc,
         fps,
@@ -355,6 +440,15 @@ def main():
             height
         )
     )
+
+    if not writer.isOpened():
+
+        cap.release()
+
+        raise RuntimeError(
+            f"Could not create output video:\n"
+            f"{output_video}"
+        )
 
     # ========================================================
     # TRACK STATE
@@ -844,7 +938,7 @@ def main():
     )
 
     output_df.to_csv(
-        OUTPUT_CSV,
+        output_csv,
         index=False
     )
 
@@ -867,7 +961,7 @@ def main():
     )
 
     print(
-        OUTPUT_VIDEO
+        output_video
     )
 
     print(
@@ -875,8 +969,9 @@ def main():
     )
 
     print(
-        OUTPUT_CSV
+        output_csv
     )
+
 
 if __name__ == "__main__":
     main()

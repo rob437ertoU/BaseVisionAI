@@ -1,0 +1,9 @@
+session_insights_version,player_id,session_id,category,rank,item,value,unit,observation,performance_interpretation
+Session Insights V1,player_001,session_001,LOWEST_OBSERVED_VARIABILITY,1,Head pre-peak movement,1.5614273817526567,robust CV percent,Head pre-peak movement was among the lowest observed session-variability metrics.,False
+Session Insights V1,player_001,session_001,LOWEST_OBSERVED_VARIABILITY,2,Left wrist peak normalized,14.64980987650392,robust CV percent,Left wrist peak normalized was among the lowest observed session-variability metrics.,False
+Session Insights V1,player_001,session_001,LOWEST_OBSERVED_VARIABILITY,3,Load duration,16.473333333333336,robust CV percent,Load duration was among the lowest observed session-variability metrics.,False
+Session Insights V1,player_001,session_001,HIGHEST_OBSERVED_VARIABILITY,1,Hip center peak,112.5802096128226,robust CV percent,Hip center peak was among the highest observed session-variability metrics.,False
+Session Insights V1,player_001,session_001,HIGHEST_OBSERVED_VARIABILITY,2,Hip-shoulder separation,50.08394080712456,robust CV percent,Hip-shoulder separation was among the highest observed session-variability metrics.,False
+Session Insights V1,player_001,session_001,HIGHEST_OBSERVED_VARIABILITY,3,Load to peak,49.42,robust CV percent,Load to peak was among the highest observed session-variability metrics.,False
+Session Insights V1,player_001,session_001,REPRESENTATIVE_SWING,1,baseball_eval4,0.6223767286581167,mean absolute robust z-distance,baseball_eval4 was the baseline-eligible swing closest to the robust session median profile.,False
+Session Insights V1,player_001,session_001,MOST_DIFFERENT_ELIGIBLE_SWING,1,baseball_eval3,2.9492780524936766,mean absolute robust z-distance,baseball_eval3 was the baseline-eligible swing with the largest observed robust distance from the session median profile.,False

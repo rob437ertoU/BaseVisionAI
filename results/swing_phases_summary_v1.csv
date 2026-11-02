@@ -1,0 +1,2 @@
+first_frame,last_frame,setup_start_frame,setup_end_frame,load_start_frame,load_peak_frame,load_end_frame,swing_start_frame,swing_end_frame,peak_swing_start_frame,peak_swing_frame,peak_swing_end_frame,follow_through_start_frame,follow_through_end_frame,contact_candidate_start_frame,contact_candidate_center_frame,contact_candidate_end_frame,peak_swing_time_seconds,load_peak_time_seconds
+1,117,1,29,30,75,57,58,101,102,104,106,107,117,102,104,106,3.433333333333333,2.466666666666667

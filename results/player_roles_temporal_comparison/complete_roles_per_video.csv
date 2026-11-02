@@ -1,0 +1,7 @@
+model,video,fps,total_frames,all_4_roles_frames,all_4_roles_percent
+YOLO11n,baseball_test4.mp4,30.0,76,20,26.31578947368421
+YOLO11n,baseball_train9.mp4,30.0,108,90,83.33333333333334
+YOLO11n,baseball_train10.mp4,30.0,126,0,0.0
+YOLO26n,baseball_test4.mp4,30.0,76,0,0.0
+YOLO26n,baseball_train9.mp4,30.0,108,17,15.74074074074074
+YOLO26n,baseball_train10.mp4,30.0,126,0,0.0

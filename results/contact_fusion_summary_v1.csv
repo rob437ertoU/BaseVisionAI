@@ -1,0 +1,2 @@
+predicted_contact_frame,fusion_score,status,ball_heuristic_event_frame,phase_at_prediction,swing_score,ball_temporal_score,track_event_score
+102,0.5729831575661823,CONTACT_CANDIDATE,,PEAK_SWING,0.9399625723692941,0.0,1.0

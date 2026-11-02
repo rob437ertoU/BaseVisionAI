@@ -1,0 +1,2 @@
+predicted_contact_frame,fusion_score,status,phase,swing_score,ball_event_score,track_transition_score,contact_csv_event_frame,track_transition_frame,previous_track_end,next_track_start,ball_event_source
+100,0.8087019636540811,CONTACT_CANDIDATE,SWING,0.5217549091352026,1.0,1.0,100,100,98,102,CONTACT_HEURISTIC

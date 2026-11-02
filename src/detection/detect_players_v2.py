@@ -1,5 +1,6 @@
 from ultralytics import YOLO
 from pathlib import Path
+import argparse
 import cv2
 import csv
 import math
@@ -10,26 +11,6 @@ import math
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-
-VIDEO_PATH = (
-    PROJECT_ROOT
-    / "data"
-    / "raw"
-    / "baseball_test.mp4"
-)
-
-OUTPUT_VIDEO = (
-    PROJECT_ROOT
-    / "results"
-    / "player_detection_v2.mp4"
-)
-
-OUTPUT_CSV = (
-    PROJECT_ROOT
-    / "results"
-    / "player_detection_v2.csv"
-)
-
 
 # ============================================================
 # YOLO
@@ -605,22 +586,76 @@ def draw_role(
         2
     )
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="BaseVisionAI - Player Detection V2"
+    )
+
+    parser.add_argument(
+        "--video",
+        type=str,
+        required=True,
+        help="Input video path"
+    )
+
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        required=True,
+        help="Directory where results will be saved"
+    )
+
+    return parser.parse_args()
 
 # ============================================================
 # MAIN
 # ============================================================
 
 def main():
+    args = parse_args()
+
+    # ========================================================
+    # INPUT VIDEO
+    # ========================================================
+
+    video_path = Path(args.video)
+
+    if not video_path.is_absolute():
+        video_path = PROJECT_ROOT / video_path
+
+    video_path = video_path.resolve()
+
+    # ========================================================
+    # OUTPUT DIRECTORY
+    # ========================================================
+
+    output_dir = Path(args.output_dir)
+
+    if not output_dir.is_absolute():
+        output_dir = PROJECT_ROOT / output_dir
+
+    output_dir = output_dir.resolve()
+
+    output_dir.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    output_video = output_dir / "player_detection_v2.mp4"
+    output_csv = output_dir / "player_detection_v2.csv"
 
     print("=" * 70)
     print("BaseVisionAI - Player Detection V2")
     print("=" * 70)
 
-    if not VIDEO_PATH.exists():
+    print(f"Video: {video_path}")
+    print(f"Output directory: {output_dir}")
+
+    if not video_path.exists():
 
         raise FileNotFoundError(
             f"Video not found:\n"
-            f"{VIDEO_PATH}"
+            f"{video_path}"
         )
 
     # ========================================================
@@ -637,15 +672,14 @@ def main():
 
     cap = cv2.VideoCapture(
         str(
-            VIDEO_PATH
-        )
+            video_path        )
     )
 
     if not cap.isOpened():
 
         raise RuntimeError(
             f"Could not open video:\n"
-            f"{VIDEO_PATH}"
+            f"{video_path}"
         )
 
     fps = cap.get(
@@ -688,7 +722,7 @@ def main():
     # VIDEO OUTPUT
     # ========================================================
 
-    OUTPUT_VIDEO.parent.mkdir(
+    output_video.parent.mkdir(
         parents=True,
         exist_ok=True
     )
@@ -701,7 +735,7 @@ def main():
 
     writer = cv2.VideoWriter(
         str(
-            OUTPUT_VIDEO
+            output_video
         ),
         fourcc,
         fps,
@@ -727,7 +761,7 @@ def main():
     # ========================================================
 
     with open(
-        OUTPUT_CSV,
+        output_csv,
         "w",
         newline="",
         encoding="utf-8"
@@ -1296,7 +1330,7 @@ def main():
     )
 
     print(
-        OUTPUT_VIDEO
+        output_video
     )
 
     print(
@@ -1304,7 +1338,7 @@ def main():
     )
 
     print(
-        OUTPUT_CSV
+        output_csv
     )
 
 

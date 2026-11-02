@@ -1,0 +1,2 @@
+video_id,player_id,session_id,target_validity,session_profiles,valid_session_profiles,baseline_profiles,baseline_mode,metrics_compared,consistent_metrics,slightly_different_metrics,outside_typical_range_metrics
+baseball_eval1,player_001,session_001,VALID_SWING,6,5,4,LEAVE_ONE_OUT,7,0,2,5

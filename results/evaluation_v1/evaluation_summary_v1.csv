@@ -1,0 +1,7 @@
+video_id,status,gt_pitch_result,gt_contact_type,gt_contact_frame,real_yolo_observations,pred_pitch_result,crossing_frame,crossing_y,extrapolation_frames,mean_fit_residual_px,horizontal_inside,vertical_inside,pitch_evidence,pred_contact,contact_candidate_frame,contact_evidence_score,contact_evidence_quality,failure_stage
+baseball_eval1,COMPLETE,BALL,TAKE,,11,INSUFFICIENT_CROSSING_EVIDENCE,19.3,756.4,-149.7,92.93,False,False,INSUFFICIENT,NO_CONTACT_EVIDENCE,147.0,0.135,INSUFFICIENT,
+baseball_eval2,COMPLETE,BALL,MISS,,0,INSUFFICIENT_CROSSING_EVIDENCE,,,,,,,,NO_CONTACT_EVIDENCE,119.0,0.135,INSUFFICIENT,
+baseball_eval3,COMPLETE,UNKNOWN,HIT,,0,INSUFFICIENT_CROSSING_EVIDENCE,,,,,,,,NO_CONTACT_EVIDENCE,56.0,0.135,INSUFFICIENT,
+baseball_eval4,COMPLETE,UNKNOWN,HIT,52.0,6,INSUFFICIENT_CROSSING_EVIDENCE,70.09,589.1,-0.91,161.63,False,False,INSUFFICIENT,NO_CONTACT_EVIDENCE,49.0,0.45,INSUFFICIENT,
+baseball_eval5,COMPLETE,BALL,TAKE,,1,INSUFFICIENT_CROSSING_EVIDENCE,,,,,,,,NO_CONTACT_EVIDENCE,23.0,0.135,INSUFFICIENT,
+baseball_eval6,COMPLETE,BALL,TAKE,,1,INSUFFICIENT_CROSSING_EVIDENCE,,,,,,,,NO_CONTACT_EVIDENCE,10.0,0.135,INSUFFICIENT,

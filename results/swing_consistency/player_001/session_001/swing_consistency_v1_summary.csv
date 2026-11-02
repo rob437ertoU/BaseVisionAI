@@ -1,0 +1,2 @@
+consistency_version,player_id,session_id,profiles_total,valid_swings,excluded_profiles,metrics_configured,metrics_available,mean_cv_percent,median_cv_percent,mean_repeatability_index,very_consistent_metrics,consistent_metrics,moderate_variability_metrics,high_variability_metrics,very_high_variability_metrics,mean_pose_quality,calibrated_biomechanics
+Swing Consistency V1,player_001,session_001,6,5,1,14,14,56.911545382676785,54.4972670976589,44.13222627982395,1,0,1,3,9,0.8907906962607639,False

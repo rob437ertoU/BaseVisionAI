@@ -1,0 +1,7 @@
+feedback_version,video_id,player_id,session_id,target_validity,session_profiles,valid_session_profiles,baseline_profiles,baseline_mode,metrics_available,metrics_compared,consistent_metrics,slightly_different_metrics,outside_typical_range_metrics,high_metrics,low_metrics,mean_pose_quality,measurement_confidence,missing_metrics
+Swing Feedback V1.1,baseball_eval1,player_001,session_001,VALID_SWING,6,5,4,LEAVE_ONE_OUT,14,14,2,5,7,4,3,0.9269553975436328,HIGH,
+Swing Feedback V1.1,baseball_eval2,player_001,session_001,VALID_SWING,6,5,4,LEAVE_ONE_OUT,14,14,6,1,7,6,1,0.8422035480859011,MODERATE,
+Swing Feedback V1.1,baseball_eval3,player_001,session_001,VALID_SWING,6,5,4,LEAVE_ONE_OUT,14,11,5,2,4,2,2,0.8992869875222816,MODERATE,
+Swing Feedback V1.1,baseball_eval4,player_001,session_001,VALID_SWING,6,5,4,LEAVE_ONE_OUT,14,14,7,4,3,0,3,0.8776470588235292,MODERATE,
+Swing Feedback V1.1,baseball_eval5,player_001,session_001,LOW_CONFIDENCE_SWING,6,5,5,LEAVE_ONE_OUT,14,14,1,4,9,5,4,0.9230769230769232,HIGH,
+Swing Feedback V1.1,baseball_eval6,player_001,session_001,VALID_SWING,6,5,4,LEAVE_ONE_OUT,14,14,4,1,9,3,6,0.9078604893284749,HIGH,

@@ -1,0 +1,154 @@
+player_id,session_id,video_id,swing_number,metric,label,value
+player_001,session_001,baseball_eval1,1,left_wrist_peak_px_frame,Left wrist peak,25.1810960911328
+player_001,session_001,baseball_eval1,1,right_wrist_peak_px_frame,Right wrist peak,33.39210085184649
+player_001,session_001,baseball_eval1,1,left_wrist_peak_torsoscale_frame,Left wrist peak normalized,0.3020381833615492
+player_001,session_001,baseball_eval1,1,right_wrist_peak_torsoscale_frame,Right wrist peak normalized,0.4005262298120891
+player_001,session_001,baseball_eval1,1,right_minus_left_wrist_peak,R-L wrist peak difference,8.211004760713692
+player_001,session_001,baseball_eval1,1,wrist_peak_time_gap_sec,Wrist peak timing gap,0.5333333333333333
+player_001,session_001,baseball_eval1,1,hip_center_peak_px_frame,Hip center peak,4.892207928705653
+player_001,session_001,baseball_eval1,1,shoulder_center_peak_px_frame,Shoulder center peak,4.158828852378544
+player_001,session_001,baseball_eval1,1,shoulder_rotation_projected_deg,Shoulder projected rotation,79.3692221117177
+player_001,session_001,baseball_eval1,1,hip_rotation_projected_deg,Hip projected rotation,67.32338189757576
+player_001,session_001,baseball_eval1,1,hip_shoulder_separation_projected_deg,Hip-shoulder separation,71.10084748894363
+player_001,session_001,baseball_eval1,1,shoulder_minus_hip_rotation_deg,Shoulder-Hip rotation difference,12.045840214141949
+player_001,session_001,baseball_eval1,1,head_prepeak_torso,Head pre-peak movement,0.6628959190761704
+player_001,session_001,baseball_eval1,1,left_ankle_prepeak_torso,Left ankle pre-peak movement,0.2097370919188771
+player_001,session_001,baseball_eval1,1,right_ankle_prepeak_torso,Right ankle pre-peak movement,0.8393927590028186
+player_001,session_001,baseball_eval1,1,left_knee_prepeak_torso,Left knee pre-peak movement,0.4154756858975166
+player_001,session_001,baseball_eval1,1,right_knee_prepeak_torso,Right knee pre-peak movement,0.7247876606200552
+player_001,session_001,baseball_eval1,1,head_follow_torso,Head follow-through movement,0.4655582180357154
+player_001,session_001,baseball_eval1,1,left_ankle_follow_torso,Left ankle follow-through movement,0.5942445226551601
+player_001,session_001,baseball_eval1,1,right_ankle_follow_torso,Right ankle follow-through movement,0.78467402579116
+player_001,session_001,baseball_eval1,1,load_duration_sec,Load duration,0.3
+player_001,session_001,baseball_eval1,1,swing_duration_sec,Swing duration,0.9333333333333332
+player_001,session_001,baseball_eval1,1,peak_duration_sec,Peak duration,0.1666666666666666
+player_001,session_001,baseball_eval1,1,follow_duration_sec,Follow-through duration,1.1
+player_001,session_001,baseball_eval1,1,load_to_peak_sec,Load to peak,1.2333333333333334
+player_001,session_001,baseball_eval1,1,swing_to_peak_sec,Swing to peak,0.9333333333333332
+player_001,session_001,baseball_eval1,1,mean_pose_quality,Mean pose quality,0.9269553975436328
+player_001,session_001,baseball_eval2,2,left_wrist_peak_px_frame,Left wrist peak,34.64891145294331
+player_001,session_001,baseball_eval2,2,right_wrist_peak_px_frame,Right wrist peak,38.5712950878268
+player_001,session_001,baseball_eval2,2,left_wrist_peak_torsoscale_frame,Left wrist peak normalized,0.3924006629702248
+player_001,session_001,baseball_eval2,2,right_wrist_peak_torsoscale_frame,Right wrist peak normalized,0.4368218546963243
+player_001,session_001,baseball_eval2,2,right_minus_left_wrist_peak,R-L wrist peak difference,3.922383634883488
+player_001,session_001,baseball_eval2,2,wrist_peak_time_gap_sec,Wrist peak timing gap,0.0
+player_001,session_001,baseball_eval2,2,hip_center_peak_px_frame,Hip center peak,47.23715844463908
+player_001,session_001,baseball_eval2,2,shoulder_center_peak_px_frame,Shoulder center peak,14.741578067481928
+player_001,session_001,baseball_eval2,2,shoulder_rotation_projected_deg,Shoulder projected rotation,65.72881293151595
+player_001,session_001,baseball_eval2,2,hip_rotation_projected_deg,Hip projected rotation,31.9309972508342
+player_001,session_001,baseball_eval2,2,hip_shoulder_separation_projected_deg,Hip-shoulder separation,83.28474714364603
+player_001,session_001,baseball_eval2,2,shoulder_minus_hip_rotation_deg,Shoulder-Hip rotation difference,33.79781568068175
+player_001,session_001,baseball_eval2,2,head_prepeak_torso,Head pre-peak movement,0.5999127754228798
+player_001,session_001,baseball_eval2,2,left_ankle_prepeak_torso,Left ankle pre-peak movement,1.1618564530040894
+player_001,session_001,baseball_eval2,2,right_ankle_prepeak_torso,Right ankle pre-peak movement,0.9868744540338568
+player_001,session_001,baseball_eval2,2,left_knee_prepeak_torso,Left knee pre-peak movement,1.1453907644545926
+player_001,session_001,baseball_eval2,2,right_knee_prepeak_torso,Right knee pre-peak movement,0.3081187804208805
+player_001,session_001,baseball_eval2,2,left_ankle_follow_torso,Left ankle follow-through movement,0.3817291135487084
+player_001,session_001,baseball_eval2,2,right_ankle_follow_torso,Right ankle follow-through movement,0.4371637485442349
+player_001,session_001,baseball_eval2,2,load_duration_sec,Load duration,0.3
+player_001,session_001,baseball_eval2,2,swing_duration_sec,Swing duration,0.3666666666666666
+player_001,session_001,baseball_eval2,2,peak_duration_sec,Peak duration,0.1666666666666666
+player_001,session_001,baseball_eval2,2,follow_duration_sec,Follow-through duration,0.1666666666666666
+player_001,session_001,baseball_eval2,2,load_to_peak_sec,Load to peak,0.6666666666666666
+player_001,session_001,baseball_eval2,2,swing_to_peak_sec,Swing to peak,0.3666666666666666
+player_001,session_001,baseball_eval2,2,mean_pose_quality,Mean pose quality,0.8422035480859011
+player_001,session_001,baseball_eval3,3,left_wrist_peak_px_frame,Left wrist peak,29.67010682126708
+player_001,session_001,baseball_eval3,3,right_wrist_peak_px_frame,Right wrist peak,16.808996077559403
+player_001,session_001,baseball_eval3,3,left_wrist_peak_torsoscale_frame,Left wrist peak normalized,0.368881612393736
+player_001,session_001,baseball_eval3,3,right_wrist_peak_torsoscale_frame,Right wrist peak normalized,0.2089823812621279
+player_001,session_001,baseball_eval3,3,right_minus_left_wrist_peak,R-L wrist peak difference,-12.861110743707677
+player_001,session_001,baseball_eval3,3,wrist_peak_time_gap_sec,Wrist peak timing gap,-0.0333333333333333
+player_001,session_001,baseball_eval3,3,hip_center_peak_px_frame,Hip center peak,35.14924676131357
+player_001,session_001,baseball_eval3,3,shoulder_center_peak_px_frame,Shoulder center peak,8.822176890736163
+player_001,session_001,baseball_eval3,3,shoulder_rotation_projected_deg,Shoulder projected rotation,26.091974526129206
+player_001,session_001,baseball_eval3,3,hip_rotation_projected_deg,Hip projected rotation,23.200775818234604
+player_001,session_001,baseball_eval3,3,hip_shoulder_separation_projected_deg,Hip-shoulder separation,16.98919931072794
+player_001,session_001,baseball_eval3,3,shoulder_minus_hip_rotation_deg,Shoulder-Hip rotation difference,2.891198707894602
+player_001,session_001,baseball_eval3,3,load_duration_sec,Load duration,1.3
+player_001,session_001,baseball_eval3,3,swing_duration_sec,Swing duration,0.4666666666666667
+player_001,session_001,baseball_eval3,3,peak_duration_sec,Peak duration,0.1666666666666666
+player_001,session_001,baseball_eval3,3,follow_duration_sec,Follow-through duration,0.2666666666666666
+player_001,session_001,baseball_eval3,3,load_to_peak_sec,Load to peak,1.7666666666666666
+player_001,session_001,baseball_eval3,3,swing_to_peak_sec,Swing to peak,0.4666666666666667
+player_001,session_001,baseball_eval3,3,mean_pose_quality,Mean pose quality,0.8992869875222816
+player_001,session_001,baseball_eval4,4,left_wrist_peak_px_frame,Left wrist peak,27.45438652741307
+player_001,session_001,baseball_eval4,4,right_wrist_peak_px_frame,Right wrist peak,27.655695247844
+player_001,session_001,baseball_eval4,4,left_wrist_peak_torsoscale_frame,Left wrist peak normalized,0.3075917938725454
+player_001,session_001,baseball_eval4,4,right_wrist_peak_torsoscale_frame,Right wrist peak normalized,0.309847204328638
+player_001,session_001,baseball_eval4,4,right_minus_left_wrist_peak,R-L wrist peak difference,0.20130872043093
+player_001,session_001,baseball_eval4,4,wrist_peak_time_gap_sec,Wrist peak timing gap,-0.0666666666666666
+player_001,session_001,baseball_eval4,4,hip_center_peak_px_frame,Hip center peak,4.74404399452076
+player_001,session_001,baseball_eval4,4,shoulder_center_peak_px_frame,Shoulder center peak,5.7774412353963385
+player_001,session_001,baseball_eval4,4,shoulder_rotation_projected_deg,Shoulder projected rotation,64.36557068908621
+player_001,session_001,baseball_eval4,4,hip_rotation_projected_deg,Hip projected rotation,46.76519611106593
+player_001,session_001,baseball_eval4,4,hip_shoulder_separation_projected_deg,Hip-shoulder separation,44.300753220834935
+player_001,session_001,baseball_eval4,4,shoulder_minus_hip_rotation_deg,Shoulder-Hip rotation difference,17.60037457802028
+player_001,session_001,baseball_eval4,4,head_prepeak_torso,Head pre-peak movement,0.6559872688424476
+player_001,session_001,baseball_eval4,4,left_ankle_prepeak_torso,Left ankle pre-peak movement,0.2884533528115111
+player_001,session_001,baseball_eval4,4,right_ankle_prepeak_torso,Right ankle pre-peak movement,0.3797855905665391
+player_001,session_001,baseball_eval4,4,left_knee_prepeak_torso,Left knee pre-peak movement,0.2433801801316625
+player_001,session_001,baseball_eval4,4,right_knee_prepeak_torso,Right knee pre-peak movement,0.5413091649765726
+player_001,session_001,baseball_eval4,4,head_follow_torso,Head follow-through movement,0.4975433695607419
+player_001,session_001,baseball_eval4,4,left_ankle_follow_torso,Left ankle follow-through movement,0.8052287735716082
+player_001,session_001,baseball_eval4,4,right_ankle_follow_torso,Right ankle follow-through movement,0.3768767184617593
+player_001,session_001,baseball_eval4,4,load_duration_sec,Load duration,0.2333333333333333
+player_001,session_001,baseball_eval4,4,swing_duration_sec,Swing duration,0.3666666666666666
+player_001,session_001,baseball_eval4,4,peak_duration_sec,Peak duration,0.1666666666666666
+player_001,session_001,baseball_eval4,4,follow_duration_sec,Follow-through duration,0.8
+player_001,session_001,baseball_eval4,4,load_to_peak_sec,Load to peak,0.6
+player_001,session_001,baseball_eval4,4,swing_to_peak_sec,Swing to peak,0.3666666666666666
+player_001,session_001,baseball_eval4,4,mean_pose_quality,Mean pose quality,0.8776470588235292
+player_001,session_001,baseball_eval5,5,left_wrist_peak_px_frame,Left wrist peak,77.07858490599163
+player_001,session_001,baseball_eval5,5,right_wrist_peak_px_frame,Right wrist peak,98.35155150619649
+player_001,session_001,baseball_eval5,5,left_wrist_peak_torsoscale_frame,Left wrist peak normalized,0.9013872748128098
+player_001,session_001,baseball_eval5,5,right_wrist_peak_torsoscale_frame,Right wrist peak normalized,1.1501617095579395
+player_001,session_001,baseball_eval5,5,right_minus_left_wrist_peak,R-L wrist peak difference,21.272966600204853
+player_001,session_001,baseball_eval5,5,wrist_peak_time_gap_sec,Wrist peak timing gap,0.0
+player_001,session_001,baseball_eval5,5,hip_center_peak_px_frame,Hip center peak,82.92754270586053
+player_001,session_001,baseball_eval5,5,shoulder_center_peak_px_frame,Shoulder center peak,76.67858218554674
+player_001,session_001,baseball_eval5,5,shoulder_rotation_projected_deg,Shoulder projected rotation,35.36123307856417
+player_001,session_001,baseball_eval5,5,hip_rotation_projected_deg,Hip projected rotation,47.589191727821486
+player_001,session_001,baseball_eval5,5,hip_shoulder_separation_projected_deg,Hip-shoulder separation,21.510421263034743
+player_001,session_001,baseball_eval5,5,shoulder_minus_hip_rotation_deg,Shoulder-Hip rotation difference,-12.227958649257316
+player_001,session_001,baseball_eval5,5,head_prepeak_torso,Head pre-peak movement,0.7667609730973177
+player_001,session_001,baseball_eval5,5,left_ankle_prepeak_torso,Left ankle pre-peak movement,0.6205355138149112
+player_001,session_001,baseball_eval5,5,right_ankle_prepeak_torso,Right ankle pre-peak movement,0.4736995624253994
+player_001,session_001,baseball_eval5,5,left_knee_prepeak_torso,Left knee pre-peak movement,0.4297881926784886
+player_001,session_001,baseball_eval5,5,right_knee_prepeak_torso,Right knee pre-peak movement,0.406213785622627
+player_001,session_001,baseball_eval5,5,head_follow_torso,Head follow-through movement,1.2385860751439062
+player_001,session_001,baseball_eval5,5,left_ankle_follow_torso,Left ankle follow-through movement,0.9995129539042422
+player_001,session_001,baseball_eval5,5,right_ankle_follow_torso,Right ankle follow-through movement,0.8597224082080447
+player_001,session_001,baseball_eval5,5,load_duration_sec,Load duration,0.0333333333333333
+player_001,session_001,baseball_eval5,5,swing_duration_sec,Swing duration,0.0333333333333333
+player_001,session_001,baseball_eval5,5,peak_duration_sec,Peak duration,0.1666666666666666
+player_001,session_001,baseball_eval5,5,follow_duration_sec,Follow-through duration,2.2
+player_001,session_001,baseball_eval5,5,load_to_peak_sec,Load to peak,0.0666666666666666
+player_001,session_001,baseball_eval5,5,swing_to_peak_sec,Swing to peak,0.0333333333333333
+player_001,session_001,baseball_eval5,5,mean_pose_quality,Mean pose quality,0.9230769230769232
+player_001,session_001,baseball_eval6,6,left_wrist_peak_px_frame,Left wrist peak,49.11126150544433
+player_001,session_001,baseball_eval6,6,right_wrist_peak_px_frame,Right wrist peak,4.073409865484417
+player_001,session_001,baseball_eval6,6,left_wrist_peak_torsoscale_frame,Left wrist peak normalized,0.4992941358904499
+player_001,session_001,baseball_eval6,6,right_wrist_peak_torsoscale_frame,Right wrist peak normalized,0.0414126942898669
+player_001,session_001,baseball_eval6,6,right_minus_left_wrist_peak,R-L wrist peak difference,-45.03785163995992
+player_001,session_001,baseball_eval6,6,wrist_peak_time_gap_sec,Wrist peak timing gap,-0.2
+player_001,session_001,baseball_eval6,6,hip_center_peak_px_frame,Hip center peak,31.061266500166813
+player_001,session_001,baseball_eval6,6,shoulder_center_peak_px_frame,Shoulder center peak,15.13735375794469
+player_001,session_001,baseball_eval6,6,shoulder_rotation_projected_deg,Shoulder projected rotation,34.621752829204155
+player_001,session_001,baseball_eval6,6,hip_rotation_projected_deg,Hip projected rotation,19.82851136621761
+player_001,session_001,baseball_eval6,6,hip_shoulder_separation_projected_deg,Hip-shoulder separation,49.43486303222247
+player_001,session_001,baseball_eval6,6,shoulder_minus_hip_rotation_deg,Shoulder-Hip rotation difference,14.793241462986543
+player_001,session_001,baseball_eval6,6,head_prepeak_torso,Head pre-peak movement,0.7385737725909802
+player_001,session_001,baseball_eval6,6,left_ankle_prepeak_torso,Left ankle pre-peak movement,0.5090890998326082
+player_001,session_001,baseball_eval6,6,right_ankle_prepeak_torso,Right ankle pre-peak movement,0.6584163223627971
+player_001,session_001,baseball_eval6,6,left_knee_prepeak_torso,Left knee pre-peak movement,0.605716544501483
+player_001,session_001,baseball_eval6,6,right_knee_prepeak_torso,Right knee pre-peak movement,0.3806301486837868
+player_001,session_001,baseball_eval6,6,head_follow_torso,Head follow-through movement,1.0038750633387057
+player_001,session_001,baseball_eval6,6,left_ankle_follow_torso,Left ankle follow-through movement,0.731357463547324
+player_001,session_001,baseball_eval6,6,right_ankle_follow_torso,Right ankle follow-through movement,0.787043759299621
+player_001,session_001,baseball_eval6,6,load_duration_sec,Load duration,0.0333333333333333
+player_001,session_001,baseball_eval6,6,swing_duration_sec,Swing duration,0.1
+player_001,session_001,baseball_eval6,6,peak_duration_sec,Peak duration,0.1666666666666666
+player_001,session_001,baseball_eval6,6,follow_duration_sec,Follow-through duration,3.3666666666666667
+player_001,session_001,baseball_eval6,6,load_to_peak_sec,Load to peak,0.1333333333333333
+player_001,session_001,baseball_eval6,6,swing_to_peak_sec,Swing to peak,0.1
+player_001,session_001,baseball_eval6,6,mean_pose_quality,Mean pose quality,0.9078604893284749

@@ -1,0 +1,20 @@
+path: C:/Users/edcar/Documents/BaseVisionAI/data/player_roles_v1
+
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 4
+
+names:
+  0: batter
+  1: catcher
+  2: pitcher
+  3: umpire
+
+roboflow:
+  workspace: edcar1408-outlook-com
+  project: basevisionai-player-roles
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/edcar1408-outlook-com/basevisionai-player-roles/dataset/1

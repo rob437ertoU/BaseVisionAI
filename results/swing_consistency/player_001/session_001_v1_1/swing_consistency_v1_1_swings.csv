@@ -1,0 +1,5 @@
+consistency_version,video_id,player_id,session_id,validity_status,baseline_eligible,metrics_used,mean_robust_distance,median_robust_distance,rms_robust_distance,max_robust_distance,representativeness_rank
+Swing Consistency V1.1,baseball_eval4,player_001,session_001,VALID_SWING,True,14,0.6223767286581167,0.5500689040461604,0.818119241025094,2.1019579688960937,1
+Swing Consistency V1.1,baseball_eval1,player_001,session_001,VALID_SWING,True,14,1.574058040946299,0.67448975,2.7374122072935165,6.969727416666659,2
+Swing Consistency V1.1,baseball_eval2,player_001,session_001,VALID_SWING,True,14,1.5912233875236965,0.7708909878981582,2.628344877602122,7.483859523023194,3
+Swing Consistency V1.1,baseball_eval3,player_001,session_001,VALID_SWING,True,11,2.9492780524936766,0.9243768593939069,6.266247014342265,20.234692499999998,4

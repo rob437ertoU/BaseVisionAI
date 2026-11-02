@@ -1,0 +1,7 @@
+video_id,status,reason,profile_path
+baseball_eval1,SUCCESS,,results\player_profiles\baseball_eval1_player_swing_profile_v1.csv
+baseball_eval2,SUCCESS,,results\player_profiles\baseball_eval2_player_swing_profile_v1.csv
+baseball_eval3,SUCCESS,,results\player_profiles\baseball_eval3_player_swing_profile_v1.csv
+baseball_eval4,SUCCESS,,results\player_profiles\baseball_eval4_player_swing_profile_v1.csv
+baseball_eval5,SUCCESS,,results\player_profiles\baseball_eval5_player_swing_profile_v1.csv
+baseball_eval6,SUCCESS,,results\player_profiles\baseball_eval6_player_swing_profile_v1.csv

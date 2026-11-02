@@ -1,0 +1,7 @@
+report_version,video_id,player_id,session_id,validity_status,baseline_eligible,baseline_mode,baseline_profiles,metric_coverage_percent,comparison_level,outside_typical_range,mean_abs_robust_z,median_abs_robust_z,measurement_confidence,is_representative_swing,is_most_different_eligible_swing,performance_interpretation
+Session Report V1,baseball_eval1,player_001,session_001,VALID_SWING,True,LEAVE_ONE_OUT,3,100.0,NOTICEABLE_DIFFERENCE,7,3.018299533780341,1.360679380879187,HIGH,False,False,False
+Session Report V1,baseball_eval2,player_001,session_001,VALID_SWING,True,LEAVE_ONE_OUT,3,100.0,MODERATE_DIFFERENCE,5,17.122546560345153,0.9627957916420006,MODERATE,False,False,False
+Session Report V1,baseball_eval3,player_001,session_001,VALID_SWING,True,LEAVE_ONE_OUT,3,78.57142857142857,NOTICEABLE_DIFFERENCE,7,19.26548829108758,3.559502362462865,MODERATE,False,True,False
+Session Report V1,baseball_eval4,player_001,session_001,VALID_SWING,True,LEAVE_ONE_OUT,3,100.0,MODERATE_DIFFERENCE,4,1.2205369328738531,0.7468884505762755,MODERATE,True,False,False
+Session Report V1,baseball_eval5,player_001,session_001,LOW_CONFIDENCE_SWING,False,FULL_ELIGIBLE_BASELINE,4,100.0,NOTICEABLE_DIFFERENCE,12,5.715477672744958,4.008287012525961,HIGH,False,False,False
+Session Report V1,baseball_eval6,player_001,session_001,TEMPORAL_LOW_CONFIDENCE,False,FULL_ELIGIBLE_BASELINE,4,100.0,NOTICEABLE_DIFFERENCE,10,2.8528530978902964,2.5013708708191955,HIGH,False,False,False
